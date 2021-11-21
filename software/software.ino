@@ -9,7 +9,7 @@ void shift(unsigned char data) {
 	Serial.println(data, BIN);
 	#endif
 
-	// pull down latch
+	// pull down latch register
 	digitalWrite(PINOUT_LCK, LOW);
 
 	for(int i = 0; i < 8; i++) {
@@ -22,7 +22,7 @@ void shift(unsigned char data) {
 		digitalWrite(PINOUT_SCK, LOW);
 	}
 	
-	// pull up latch
+	// pull up latch register
 	digitalWrite(PINOUT_LCK, HIGH);
 }
 
@@ -49,8 +49,8 @@ void test_effect3(unsigned long relative_time, bool (*leds)[64]) {
 }
 
 
-#define SLIDESHOW_SIZE     (int) 3
-#define SLIDESHOW_DURATION (int) 5e3
+#define SLIDESHOW_SIZE     ( (int) 3 )
+#define SLIDESHOW_DURATION ( (int) 5e3 )
 // evil function pointer array
 void ( * slideshow_effects [SLIDESHOW_SIZE] )( unsigned long relative_time, bool (*leds)[64] ) = {
 	test_effect1,

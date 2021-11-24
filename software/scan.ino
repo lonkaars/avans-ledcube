@@ -1,0 +1,57 @@
+#include "scan.h"
+#include "shift.h"
+#include "software.h"
+
+unsigned char scan_direction = 0;
+unsigned char scan_index = 0;
+unsigned char scan_order[8] = {1};
+
+unsigned char get_state_row(unsigned char row, unsigned char direction) {
+	unsigned char return_value;
+
+	for (int i = 0; i < 8; i++)
+		return_value = return_value | ( led_state[ direction == SCAN_HOR ?
+			(i + row * 8) : (row + i * 8) ] << (7 - i));
+
+	return return_value;
+}
+
+void scan() {
+	unsigned char scan_row = 0xff ^ (1 << scan_index);
+
+	shift_state[scan_direction] = scan_row;
+	shift_state[!scan_direction] = get_state_row(scan_index, scan_direction);
+
+	// update physical state of shift register
+	update_shift_state();
+
+	// go to next row/column
+	for(int i = scan_index + 1; i < (scan_index + 7); i++) {
+		if (scan_order[i % 8] == 0) continue;
+		scan_index = i % 8;
+		break;
+	}
+}
+
+void optimize_scan() {
+	unsigned char optimal_direction = 0,
+								hv_emptyc[2] = {0},
+								hv_empty[2][8] = {0},
+								optimal_scan_index = 0;
+
+	// calculate empty rows/columns
+	for(unsigned char direction = 0; direction < 2; direction++) {
+		for(unsigned char row; row < 8; row++) {
+			if (get_state_row(row, direction) == 0) {
+				hv_empty[direction][row] = 1;
+				hv_emptyc[direction]++;
+			}
+		}
+	}
+
+	optimal_direction = hv_emptyc[0] > hv_emptyc[1] ? 0 : 1;
+	memcpy(&scan_order, &hv_emptyc[optimal_direction], sizeof(scan_order));
+
+	return;
+}
+

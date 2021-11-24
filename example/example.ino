@@ -1,11 +1,8 @@
 #define SERIAL_DELAY 3
 
-// groen
-#define SERIAL_CLK 4
-// geel
+#define SERIAL_CLK 3
 #define SERIAL_INP 2
-// blauw
-#define LATCH_CLK 3
+#define LATCH_CLK 4
 
 void setup() {
 	pinMode(SERIAL_CLK, OUTPUT);

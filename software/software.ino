@@ -3,10 +3,8 @@
 #include "effects.h"
 #include "scan.h"
 
-unsigned long frame_time_millis = 0;
-
+unsigned long frame_time_millis;
 bool led_state[64];
-
 bool scan_enable = true;
 
 void setup() {

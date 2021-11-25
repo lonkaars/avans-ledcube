@@ -4,8 +4,8 @@
 #define SR_COL 1
 extern unsigned char shift_state[2];
 
-/** @brief shift shift_state naar de shift registers */
+/** @brief update physical state of shift registers with shift_state */
 void update_shift_state();
 
-/** @brief direct data naar de shift registers sturen */
+/** @brief directly push data to the serial in of the shift registers */
 void shift(unsigned char data);

@@ -1,7 +1,5 @@
 #pragma once
 
-#define SR_ROW 0
-#define SR_COL 1
 extern unsigned char shift_state[2];
 
 /** @brief update physical state of shift registers with shift_state */

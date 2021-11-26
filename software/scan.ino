@@ -18,8 +18,8 @@ unsigned char get_state_row(unsigned char row, unsigned char direction) {
 }
 
 void scan() {
-	shift_state[0] = (1 << scan_index);
-	shift_state[1] = get_state_row(scan_index, scan_direction);
+	shift_state[0] = 0x00 ^ (1 << scan_index);
+	shift_state[1] = 0xff ^ get_state_row(scan_index, scan_direction);
 
 	update_shift_state();
 

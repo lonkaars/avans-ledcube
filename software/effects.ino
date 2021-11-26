@@ -3,8 +3,14 @@
 
 void fx_roundabout (unsigned long relative_time, bool (*leds)[64]) {
 	unsigned long segment_time = SLIDESHOW_DURATION / 64;
-	memset(led_state, 0, sizeof(led_state));
-	led_state[(relative_time / segment_time) % 64] = 1;
+	#ifdef DEBUG
+	Serial.print(segment_time, DEC);
+	Serial.print(" ");
+	Serial.print((relative_time / segment_time) % 64, DEC);
+	Serial.print("\n\r");
+	#endif
+	memset(led_state, 1, sizeof(led_state));
+	led_state[(relative_time / segment_time) % 64] = 0;
 
 	return;
 }

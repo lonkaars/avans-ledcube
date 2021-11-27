@@ -15,8 +15,12 @@ void setup() {
 	pinMode(PINOUT_SCK, OUTPUT);
 	pinMode(PINOUT_LCK, OUTPUT);
 
+	pinMode(PINOUT_NOISE, INPUT); // random noise voor RNG
+	randomSeed(analogRead(PINOUT_NOISE));
+
 	#ifdef DEBUG
 	Serial.begin(CONFIG_SERIAL_BAUD);
+	Serial.println("startup");
 	#endif
 
 	#ifndef SLIDESHOW_DURATION
@@ -24,7 +28,7 @@ void setup() {
 		slideshow_length_total += slideshow_lengths[i];
 	#endif
 
-	frame_time_millis = 1000 / CONFIG_FRAMERATE * CONFIG_FRAMERATE;
+	frame_time_millis = (int)((double) 1000 / (double) CONFIG_FRAMERATE);
 }
 
 void loop() {
@@ -41,10 +45,15 @@ void loop() {
 		slide_sum += slideshow_lengths[i];
 		if (slide_time >= slide_sum) continue;
 		slide_index = i;
+		slide_time -= slide_sum - slideshow_lengths[i];
 		break;
 	}
 	#endif
-	slideshow_effects[slide_index](slide_time, &led_state);
+
+	#ifdef DEBUG
+	print_ani_debug(slide_index, slide_time);
+	#endif
+	slideshow_effects[slide_index](slide_time);
 
 	if (scan_enable) scan();
 }

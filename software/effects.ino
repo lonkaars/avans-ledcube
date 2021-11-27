@@ -21,6 +21,11 @@ void fx_roundabout (unsigned long relative_time, bool (*leds)[64]) {
 
 #define FX_LEN_WIPEXYZ 6e3
 void fx_wipexyz (unsigned long relative_time, bool (*leds)[64]) {
+	memset(leds, 0, sizeof(leds));
+	unsigned long tick = relative_time / 200;
+	unsigned int  direction = (tick / 6) % 3;
+
+	fill_plane(direction, zigzag(4, tick));
 
 	return;
 }

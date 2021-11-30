@@ -44,14 +44,14 @@ void fx_rainfall (unsigned long relative_time) {
 	return;
 }
 
-/* #define FX_LEN_TEST_LEDS_IN_ORDER (unsigned long) 10e3
+#define FX_LEN_TEST_LEDS_IN_ORDER (unsigned long) 10e3
 void test_leds_inorder (unsigned long relative_time) {
 	memset(led_state, 0, sizeof(led_state));
 	unsigned long segment_time = FX_LEN_TEST_LEDS_IN_ORDER / 64;
-	led_state[(relative_time / segment_time) % 64] = 1;
+	led_state[led_map[(relative_time / segment_time) % 64]] = 1;
 
 	return;
-} */
+}
 
 void ( * slideshow_effects [SLIDESHOW_SIZE] )( unsigned long relative_time ) = {
 	fx_roundabout,

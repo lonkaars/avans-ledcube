@@ -16,7 +16,7 @@ unsigned char get_state_row(unsigned char row, unsigned char direction) {
 
 	for (int i = 0; i < 8; i++)
 		return_value = return_value | ( led_state[
-			direction == SCAN_HOR ? (i + row * 8) : (row + i * 8) ] << (7 - i));
+			direction == SCAN_HOR ? (i + row * 8) : (63- row - i * 8) ] << (7 - i));
 
 	return return_value;
 }
@@ -24,8 +24,13 @@ unsigned char get_state_row(unsigned char row, unsigned char direction) {
 void scan() {
 	// optimize_scan();
 
-	shift_state[0] = 0x00 ^ (1 << scan_index);
-	shift_state[1] = 0xff ^ get_state_row(scan_index, scan_direction);
+	if (scan_direction == SCAN_HOR) {
+		shift_state[0] = 0x00 ^ (1 << scan_index);
+		shift_state[1] = 0xff ^ get_state_row(scan_index, SCAN_HOR);
+	} else {
+		shift_state[0] = 0x00 ^ get_state_row(scan_index, SCAN_VER);
+		shift_state[1] = 0xff ^ (1 << scan_index);
+	}
 
 	update_shift_state();
 

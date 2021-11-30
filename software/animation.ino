@@ -16,21 +16,16 @@ unsigned int zigzag(unsigned int size, int index) {
 	return mod < size - 1 ? mod : zigzag_size - mod;
 }
 
-const unsigned int weights[3] = {16, 4, 1};
-void fill_plane(unsigned int direction, unsigned int axis3_offset) {
+const unsigned int weights[3] = {1, 4, 16};
+void fill_plane(unsigned int direction, unsigned int offset) {
 	for(int i = 0; i < 16; i++) {
-		unsigned char axis1_offset = i / 4;
-		unsigned char axis2_offset = i % 4;
+		unsigned int index = offset * weights[direction];
+		index += (i / 4) * weights[(direction + 1) % 3];
+		index += (i % 4) * weights[(direction + 2) % 3];
 
-		unsigned int axis1_weight = weights[(direction + 1) % 3];
-		unsigned int axis2_weight = weights[(direction - 1) % 3];
-		unsigned int axis3_weight = weights[direction];
+		Serial.print("xyz"[direction]);
 
-		led_state[led_map[
-			(axis1_offset * axis1_weight +
-			axis2_offset * axis2_weight +
-			axis3_offset * axis3_weight) % 64
-		]] = 1;
+		led_state[led_map[index]] = 1;
 	}
 }
 

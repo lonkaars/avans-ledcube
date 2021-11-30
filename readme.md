@@ -46,9 +46,5 @@ software/
 └── util.ino         gereedschapsfuncties
 ```
 
-de code voor de animaties is nog niet compleet af, animatie 1 en 3 doen het
-inmiddels, maar 2 heeft nog wat problemen door de `fill_plane` functie. deze ga
-ik opnieuw implementeren en woensdag testen.
-
-ook het algoritme om lege scanrijen over te slaan is nog niet afgewerkt en
-wordt dus ook op woensdag getest.
+het algoritme om lege scanrijen over te slaan is nog niet afgewerkt en wordt op
+woensdag getest.

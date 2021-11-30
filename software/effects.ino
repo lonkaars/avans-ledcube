@@ -2,7 +2,7 @@
 #include "effects.h"
 #include "animation.h"
 
-#define FX_LEN_ROUNDABOUT 5e3
+#define FX_LEN_ROUNDABOUT (unsigned long) 5e3
 void fx_roundabout (unsigned long relative_time) {
 	memset(led_state, 0, sizeof(led_state));
 	unsigned long tick = relative_time / 300;
@@ -19,7 +19,7 @@ void fx_roundabout (unsigned long relative_time) {
 	return;
 }
 
-#define FX_LEN_WIPEXYZ 6e3
+#define FX_LEN_WIPEXYZ (unsigned long) 6e3
 void fx_wipexyz (unsigned long relative_time) {
 	memset(led_state, 0, sizeof(led_state));
 	unsigned long tick = relative_time / 200;
@@ -30,7 +30,7 @@ void fx_wipexyz (unsigned long relative_time) {
 	return;
 }
 
-#define FX_LEN_RAINFALL 7e3
+#define FX_LEN_RAINFALL (unsigned long) 7e3
 unsigned long last_frame;
 void fx_rainfall (unsigned long relative_time) {
 	unsigned long frame = get_frame(relative_time);

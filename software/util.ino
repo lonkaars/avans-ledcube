@@ -16,7 +16,7 @@ void print_led_state() {
 	}
 }
 
-void print_padded_number(unsigned int number, char* pad_with, unsigned int pad_count) {
+void print_padded_number(unsigned int number, const char* pad_with, unsigned int pad_count) {
 	unsigned int pad_amount = pad_count - (int) log10(number);
 	for(int i = 0; i < pad_amount; i++) Serial.print(pad_with);
 	Serial.print(number, DEC);

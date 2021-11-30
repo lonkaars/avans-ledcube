@@ -3,7 +3,6 @@
 #include "effects.h"
 #include "scan.h"
 
-unsigned long frame_time_millis;
 bool led_state[64];
 bool scan_enable = true;
 #ifndef SLIDESHOW_DURATION
@@ -27,8 +26,6 @@ void setup() {
 	for(int i = 0; i < SLIDESHOW_SIZE; i++)
 		slideshow_length_total += slideshow_lengths[i];
 	#endif
-
-	frame_time_millis = (int)((double) 1000 / (double) CONFIG_FRAMERATE);
 }
 
 void loop() {
@@ -50,9 +47,9 @@ void loop() {
 	}
 	#endif
 
-	#ifdef DEBUG
-	print_ani_debug(slide_index, slide_time);
-	#endif
+	// #ifdef DEBUG
+	// print_ani_debug(slide_index, slide_time);
+	// #endif
 	slideshow_effects[slide_index](slide_time);
 
 	if (scan_enable) scan();

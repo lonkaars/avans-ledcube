@@ -1,5 +1,4 @@
 #ifdef DEBUG
-#include "software.h"
 #include "animation.h"
 
 void print_binary_number(unsigned char data) {
@@ -29,8 +28,6 @@ void print_ani_debug(unsigned int effect_index, unsigned long relative_time) {
 	print_padded_number(relative_time / 1000, " ", 2);
 	Serial.print(",");
 	print_padded_number(relative_time % 1000, "0", 2);
-	Serial.print(" frame ");
-	print_padded_number(get_frame(relative_time), " ", 2);
 	Serial.print("\r\n");
 }
 

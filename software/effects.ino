@@ -2,7 +2,8 @@
 #include "effects.h"
 #include "animation.h"
 
-#define FX_LEN_ROUNDABOUT (unsigned long) 5e3
+// #define FX_LEN_ROUNDABOUT (unsigned long) 5e3
+#define FX_LEN_ROUNDABOUT (unsigned long) 0
 void fx_roundabout (unsigned long relative_time) {
 	memset(led_state, 0, sizeof(led_state));
 	unsigned long tick = relative_time / 300;
@@ -26,14 +27,17 @@ void fx_wipexyz (unsigned long relative_time) {
 	unsigned int  direction = (tick / 6) % 3;
 
 	fill_plane(direction, zigzag(4, tick));
+	// fill_plane(0, 2);
 
 	return;
 }
 
-#define FX_LEN_RAINFALL (unsigned long) 7e3
+// #define FX_LEN_RAINFALL (unsigned long) 7e3
+#define FX_LEN_RAINFALL (unsigned long) 0
+#define FX_FPS_RAINFALL (double) 10
 unsigned long last_frame;
 void fx_rainfall (unsigned long relative_time) {
-	unsigned long frame = get_frame(relative_time);
+	unsigned long frame = get_frame(relative_time, FX_FPS_RAINFALL);
 	// only update on new frame
 	if (last_frame != frame) {
 		for (int i = 0x00; i < 0x30; i++) led_state[led_map[i]] = led_state[led_map[i + 0x10]];
@@ -43,10 +47,20 @@ void fx_rainfall (unsigned long relative_time) {
 	return;
 }
 
+/* #define FX_LEN_TEST_LEDS_IN_ORDER (unsigned long) 10e3
+void test_leds_inorder (unsigned long relative_time) {
+	memset(led_state, 0, sizeof(led_state));
+	unsigned long segment_time = FX_LEN_TEST_LEDS_IN_ORDER / 64;
+	led_state[(relative_time / segment_time) % 64] = 1;
+
+	return;
+} */
+
 void ( * slideshow_effects [SLIDESHOW_SIZE] )( unsigned long relative_time ) = {
 	fx_roundabout,
 	fx_wipexyz,
 	fx_rainfall,
+	// test_leds_inorder,
 };
 
 #ifndef SLIDESHOW_DURATION
@@ -54,14 +68,7 @@ unsigned long slideshow_lengths[SLIDESHOW_SIZE] = {
 	FX_LEN_ROUNDABOUT,
 	FX_LEN_WIPEXYZ,
 	FX_LEN_RAINFALL,
+	// FX_LEN_TEST_LEDS_IN_ORDER,
 };
 #endif
-
-/* void test_leds_inorder (unsigned long relative_time)[64]) {
-	memset(led_state, 0, sizeof(led_state));
-	unsigned long segment_time = SLIDESHOW_DURATION / 64;
-	led_state[(relative_time / segment_time) % 64] = 1;
-
-	return;
-} */
 

@@ -6,12 +6,9 @@
 #define PINOUT_LCK 3
 #define PINOUT_NOISE A0
 
-// animation framerate
-#define CONFIG_FRAMERATE 60
-
 // debug options
-#define CONFIG_SERIAL_BAUD 115200
-#define DEBUG
+// #define CONFIG_SERIAL_BAUD 115200
+// #define DEBUG
 
 /**
  * @brief map 3D cube coordinates to `led_state` indices

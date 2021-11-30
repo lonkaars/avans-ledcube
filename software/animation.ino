@@ -23,8 +23,6 @@ void fill_plane(unsigned int direction, unsigned int offset) {
 		index += (i / 4) * weights[(direction + 1) % 3];
 		index += (i % 4) * weights[(direction + 2) % 3];
 
-		Serial.print("xyz"[direction]);
-
 		led_state[led_map[index]] = 1;
 	}
 }

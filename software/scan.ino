@@ -50,42 +50,13 @@ void optimize_scan() {
 	// calculate empty rows/columns
 	for(unsigned char direction = 0; direction < 2; direction++) {
 		for(unsigned char row = 0; row < 8; row++) {
-			hv_empty[direction][row] = get_state_row(direction == SCAN_HOR ? row : 7 - row, direction) > 0;
-			hv_emptyc[direction] += hv_empty[direction][row];
+			bool row_empty = get_state_row(row, direction) == 0;
+			if (!row_empty) continue;
+
+			hv_empty[direction][row] = row_empty;
+			hv_emptyc[direction] += 1;
 		}
 	}
-
-	// garbage debug code (delete if worky)
-	/* Serial.print("\r\n");
-	Serial.print("\r\n");
-	Serial.print("\r\n");
-	for(int row = -1; row < 8; row++) {
-		if (row == -1) {
-			for(int i = 0; i < 8; i++) {
-				Serial.print(hv_empty[1][i], DEC);
-				Serial.print(" ");
-			}
-			Serial.print("\r\n");
-			continue;
-		}
-		for(int col = 0; col < 9; col++) {
-			if (col == 8) {
-				Serial.print(hv_empty[0][row], DEC);
-				Serial.print(" ");
-				continue;
-			}
-			Serial.print(led_state[row * 8 + col], DEC);
-			Serial.print(" ");
-		}
-		Serial.print("\n\r");
-	}
-	Serial.print("\r\n");
-	Serial.print(hv_emptyc[0], DEC);
-	Serial.print(" ");
-	Serial.print(hv_emptyc[1], DEC);
-	Serial.print("\r\n");
-	delay(80); */
-
 
 	optimal_direction = hv_emptyc[0] > hv_emptyc[1] ? 1 : 0;
 	scan_direction = optimal_direction;

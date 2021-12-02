@@ -9,14 +9,24 @@ weerstanden inplaats van zestien, en geen transistoren of mosfets. ook worden
 maar drie uitgangen van de arduino gebruikt voor de seriële ingang, seriële
 klok, en de latch klok van het shiftregister.
 
+## coole functies
+
+- algoritme om lege scanrijen over te slaan voor een hogere felheid
+- instelbare lengte en volgorde van de effecten die afspelen
+- makkelijk uitbereidbaar met nieuwe effecten
+- goed gedocumenteerd
+- opgesplitst in losse bestanden voor overzichtelijkheid
+- ingebouwde led map zodat je coordinaten kunt gebruiken in je animatiecode
+- veganistisch vriendelijk
+
 ## software
 
-de software is als gevolg hierdoor ook anders ingericht. de atmega328p heeft
-ingebouwde pwm timers, die je zou kunnen gebruiken om snel door de vier lagen
-van de ledcube heen te schakelen. omdat deze timers los van je code draaien kun
-je de ingebouwde `delay()` gewoon gebruiken om de animaties makkelijker te
-implementeren, maar dit werkt alleen wanneer je transistoren gebruikt en ze
-direct op pwm uitgangen aansluit.
+de software is als gevolg van de ongewone aansluitingswijze ook anders
+ingericht. de atmega328p heeft ingebouwde pwm timers, die je zou kunnen
+gebruiken om snel door de vier lagen van de ledcube heen te schakelen. omdat
+deze timers los van je code draaien kun je de ingebouwde `delay()` gewoon
+gebruiken om de animaties makkelijker te implementeren, maar dit werkt alleen
+wanneer je transistoren gebruikt en ze direct op pwm uitgangen aansluit.
 
 daarom gebruikt onze software geen `delay()` of andere 'blokkerende' functies,
 maar timers. dit zorgt ervoor dat de ingebouwde `loop()` functie van de arduino
@@ -46,5 +56,3 @@ software/
 └── util.ino         gereedschapsfuncties
 ```
 
-het algoritme om lege scanrijen over te slaan is nog niet afgewerkt en wordt op
-woensdag getest.
